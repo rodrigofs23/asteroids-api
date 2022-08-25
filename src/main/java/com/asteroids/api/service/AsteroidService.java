@@ -81,7 +81,8 @@ public class AsteroidService {
     }
 
     private List<Asteroid> getTop10ClosestAsteroids(List<Asteroid> asteroidList) {
-        return sortAsteroidsByDistance(asteroidList).subList(0, 10);
+        int size = Math.min(asteroidList.size(), 10);
+        return sortAsteroidsByDistance(asteroidList).subList(0, size);
     }
 
     private List<Asteroid> sortAsteroidsByDistance(List<Asteroid> asteroids) {
