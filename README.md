@@ -3,7 +3,7 @@
 ## How to use
 1. Make sure you have Java 17 installed.
 2. Run on the terminal: `mvn spring-boot:run`
-   1. Alternatively, you just run the Asteroid API application from the root of the repository.
+   1. Alternatively, you can just run the AsteroidApi class with the default configuration on your IDE.
 3. Easy to test with Swagger OpenAPI exposed in: `http://localhost:9000/swagger-ui/index.html`
     1. Endpoints:
         1. "GET api/v1/asteroid/closest-asteroids" display the 10 closest asteroids between two dates.
