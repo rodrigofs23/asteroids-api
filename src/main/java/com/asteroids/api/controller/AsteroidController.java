@@ -4,12 +4,14 @@ import com.asteroids.api.asteroid.Asteroid;
 import com.asteroids.api.asteroid.AsteroidResponse;
 import com.asteroids.api.service.AsteroidService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +28,10 @@ public class AsteroidController {
 
   @GetMapping("/closest-asteroids")
   public ResponseEntity<List<AsteroidResponse>> getClosestAsteroids(
-      @RequestParam String startDate, @RequestParam String endDate) {
-    List<Asteroid> closestAsteroids = asteroidService.getClosestAsteroids(startDate, endDate);
+      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+    List<Asteroid> closestAsteroids =
+        asteroidService.getClosestAsteroids(startDate.toString(), endDate.toString());
 
     List<AsteroidResponse> response = new ArrayList<>();
     closestAsteroids.forEach(
