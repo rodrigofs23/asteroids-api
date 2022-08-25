@@ -1,7 +1,7 @@
 package com.asteroids.api.service;
 
 import com.asteroids.api.asteroid.Asteroid;
-import com.asteroids.api.dataclient.AsteroidsNeowsClient;
+import com.asteroids.api.dataclient.AsteroidsNeowsCache;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,11 +18,11 @@ import java.util.List;
 @Service
 public class AsteroidService {
 
-    private final AsteroidsNeowsClient asteroidsNeowsClient;
+    private final AsteroidsNeowsCache asteroidsNeowsCache;
 
     @Autowired
-    public AsteroidService(AsteroidsNeowsClient asteroidsNeowsClient) {
-        this.asteroidsNeowsClient = asteroidsNeowsClient;
+    public AsteroidService(AsteroidsNeowsCache asteroidsNeowsCache) {
+        this.asteroidsNeowsCache = asteroidsNeowsCache;
     }
 
     public List<Asteroid> getClosestAsteroids(String startDate, String endDate) {
@@ -62,7 +62,7 @@ public class AsteroidService {
     }
 
     private List<Asteroid> getAsteroidList(String startDate, String endDate) {
-        JsonNode asteroids = asteroidsNeowsClient.getAsteroids(startDate, endDate);
+        JsonNode asteroids = asteroidsNeowsCache.getAsteroids(startDate, endDate);
         return asteroidListMapper(asteroids);
     }
 

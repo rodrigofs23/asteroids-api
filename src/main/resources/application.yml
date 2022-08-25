@@ -2,3 +2,5 @@ nasa-api:
   url: https://api.nasa.gov
   max-idle-seconds: 300
   apikey: bXqOcaXfiP21OxMaIqgKmb2qIB43tquakreYQHo2
+  ttl-sec: 600
+  cache-max-size: 1000
