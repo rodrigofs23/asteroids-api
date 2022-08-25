@@ -12,23 +12,27 @@ import java.time.Duration;
 @Component
 public class AsteroidsNeowsCache {
 
-    private final Cache<String, JsonNode> asteroidCache;
+  private final Cache<String, JsonNode> asteroidCache;
 
-    private final AsteroidsNeowsClient asteroidsClient;
+  private final AsteroidsNeowsClient asteroidsClient;
 
-    @Autowired
-    public AsteroidsNeowsCache(@Value("${nasa-api.ttl-sec}") long asteroidCacheTTL,
-                               @Value("${nasa-api.cache-max-size}") int asteroidCacheMaxSize,
-                               AsteroidsNeowsClient asteroidsClient) {
+  @Autowired
+  public AsteroidsNeowsCache(
+      @Value("${nasa-api.ttl-sec}") long asteroidCacheTTL,
+      @Value("${nasa-api.cache-max-size}") int asteroidCacheMaxSize,
+      AsteroidsNeowsClient asteroidsClient) {
 
-        this.asteroidCache = Caffeine.newBuilder()
+    this.asteroidCache =
+        Caffeine.newBuilder()
             .expireAfterWrite(Duration.ofSeconds(asteroidCacheTTL))
             .maximumSize(asteroidCacheMaxSize)
             .build();
-        this.asteroidsClient = asteroidsClient;
-    }
+    this.asteroidsClient = asteroidsClient;
+  }
 
-    public JsonNode getAsteroids(String startDate, String endDate) {
-        return asteroidCache.get(String.format("%s:%s", startDate, endDate), key -> asteroidsClient.getAsteroids(startDate, endDate));
-    }
+  public JsonNode getAsteroids(String startDate, String endDate) {
+    return asteroidCache.get(
+        String.format("%s:%s", startDate, endDate),
+        key -> asteroidsClient.getAsteroids(startDate, endDate));
+  }
 }

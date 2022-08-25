@@ -25,30 +25,36 @@ public class AsteroidController {
   }
 
   @GetMapping("/closest-asteroids")
-  public ResponseEntity<List<AsteroidResponse>> getClosestAsteroids(@RequestParam String startDate, @RequestParam String endDate) {
-    List<Asteroid> closestAsteroids =  asteroidService.getClosestAsteroids(startDate, endDate);
+  public ResponseEntity<List<AsteroidResponse>> getClosestAsteroids(
+      @RequestParam String startDate, @RequestParam String endDate) {
+    List<Asteroid> closestAsteroids = asteroidService.getClosestAsteroids(startDate, endDate);
 
     List<AsteroidResponse> response = new ArrayList<>();
-    closestAsteroids.forEach(asteroid -> {
-      AsteroidResponse build = AsteroidResponse.builder()
-              .id(asteroid.getId())
-              .name(asteroid.getName())
-              .closeApproachDate(asteroid.getCloseApproachData().get(0).getCloseApproachDate().toString())
-              .distanceFromEarthInKilometers(asteroid.getCloseApproachData().get(0).getMissDistance().getKilometers())
-              .build();
-      response.add(build);
-    });
+    closestAsteroids.forEach(
+        asteroid -> {
+          AsteroidResponse build =
+              AsteroidResponse.builder()
+                  .id(asteroid.getId())
+                  .name(asteroid.getName())
+                  .closeApproachDate(
+                      asteroid.getCloseApproachData().get(0).getCloseApproachDate().toString())
+                  .distanceFromEarthInKilometers(
+                      asteroid.getCloseApproachData().get(0).getMissDistance().getKilometers())
+                  .build();
+          response.add(build);
+        });
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/largest-asteroid")
-    public ResponseEntity<Asteroid> getLargestAsteroid(@RequestParam String year) {
-        Asteroid largestAsteroid = asteroidService.getLargestAsteroid(year);
-        return ResponseEntity.ok(Asteroid.builder()
-                        .id(largestAsteroid.getId())
-                        .name(largestAsteroid.getName())
-                        .estimatedDiameter(largestAsteroid.getEstimatedDiameter())
-                .build());
-    }
+  public ResponseEntity<Asteroid> getLargestAsteroid(@RequestParam String year) {
+    Asteroid largestAsteroid = asteroidService.getLargestAsteroid(year);
+    return ResponseEntity.ok(
+        Asteroid.builder()
+            .id(largestAsteroid.getId())
+            .name(largestAsteroid.getName())
+            .estimatedDiameter(largestAsteroid.getEstimatedDiameter())
+            .build());
+  }
 }

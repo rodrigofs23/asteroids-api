@@ -16,10 +16,12 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Asteroid {
 
-    private Long id;
-    private String name;
-    @JsonProperty("close_approach_data")
-    private List<CloseApproachData> closeApproachData;
-    @JsonProperty("estimated_diameter")
-    private EstimatedDiameter estimatedDiameter;
+  private Long id;
+  private String name;
+
+  @JsonProperty("close_approach_data")
+  private List<CloseApproachData> closeApproachData;
+
+  @JsonProperty("estimated_diameter")
+  private EstimatedDiameter estimatedDiameter;
 }

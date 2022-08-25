@@ -24,45 +24,55 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class AsteroidControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-    @MockBean
-    private AsteroidService asteroidService;
+  @Autowired private MockMvc mockMvc;
+  @MockBean private AsteroidService asteroidService;
 
-    @Test
-    void shouldReturnNotFound_ifInvalidEndpoint() throws Exception {
-        mockMvc.perform(get("/asteroids/{id}", "id", "1234"))
-                .andExpect(status().isNotFound());
-    }
+  @Test
+  void shouldReturnNotFound_ifInvalidEndpoint() throws Exception {
+    mockMvc.perform(get("/asteroids/{id}", "id", "1234")).andExpect(status().isNotFound());
+  }
 
-    @Test
-    void getClosestAsteroids_shouldReturnBadRequest_ifInvalidRequest() throws Exception {
-        mockMvc.perform(get("/api/v1/asteroid/closest-asteroids", "startDate", "2019-01-01"))
-                .andExpect(status().isBadRequest());
-    }
+  @Test
+  void getClosestAsteroids_shouldReturnBadRequest_ifInvalidRequest() throws Exception {
+    mockMvc
+        .perform(get("/api/v1/asteroid/closest-asteroids", "startDate", "2019-01-01"))
+        .andExpect(status().isBadRequest());
+  }
 
-    @Test
-    void getClosestAsteroids_shouldReturnOk_ifValidRequest() throws Exception {
-        List<CloseApproachData> closeApproachDataList = List.of(new CloseApproachData(new SimpleDateFormat("yyyy/MM/dd").parse("2019/01/02"), new MissDistance()));
-        when(asteroidService.getClosestAsteroids(anyString(), anyString())).thenReturn(List.of(new Asteroid(1234L, "name", closeApproachDataList, new EstimatedDiameter())));
-        mockMvc.perform(get("/api/v1/asteroid/closest-asteroids")
-                        .param("startDate", "2019-01-01")
-                        .param("endDate", "2019-01-02"))
-                .andExpect(status().isOk());
-    }
+  @Test
+  void getClosestAsteroids_shouldReturnOk_ifValidRequest() throws Exception {
+    List<CloseApproachData> closeApproachDataList =
+        List.of(
+            new CloseApproachData(
+                new SimpleDateFormat("yyyy/MM/dd").parse("2019/01/02"), new MissDistance()));
+    when(asteroidService.getClosestAsteroids(anyString(), anyString()))
+        .thenReturn(
+            List.of(new Asteroid(1234L, "name", closeApproachDataList, new EstimatedDiameter())));
+    mockMvc
+        .perform(
+            get("/api/v1/asteroid/closest-asteroids")
+                .param("startDate", "2019-01-01")
+                .param("endDate", "2019-01-02"))
+        .andExpect(status().isOk());
+  }
 
-    @Test
-    void getLargestAsteroid_shouldReturnBadRequest_ifInvalidRequest() throws Exception {
-        mockMvc.perform(get("/api/v1/asteroid/largest-asteroid", "startDate", "2019-01-01"))
-                .andExpect(status().isBadRequest());
-    }
+  @Test
+  void getLargestAsteroid_shouldReturnBadRequest_ifInvalidRequest() throws Exception {
+    mockMvc
+        .perform(get("/api/v1/asteroid/largest-asteroid", "startDate", "2019-01-01"))
+        .andExpect(status().isBadRequest());
+  }
 
-    @Test
-    void getLargestAsteroid_shouldReturnOk_ifValidRequest() throws Exception {
-        List<CloseApproachData> closeApproachDataList = List.of(new CloseApproachData(new SimpleDateFormat("yyyy/MM/dd").parse("2019/01/02"), new MissDistance()));
-        when(asteroidService.getLargestAsteroid(anyString())).thenReturn(new Asteroid(1234L, "name", closeApproachDataList, new EstimatedDiameter()));
-        mockMvc.perform(get("/api/v1/asteroid/largest-asteroid")
-                        .param("year", "2019"))
-                .andExpect(status().isOk());
-    }
+  @Test
+  void getLargestAsteroid_shouldReturnOk_ifValidRequest() throws Exception {
+    List<CloseApproachData> closeApproachDataList =
+        List.of(
+            new CloseApproachData(
+                new SimpleDateFormat("yyyy/MM/dd").parse("2019/01/02"), new MissDistance()));
+    when(asteroidService.getLargestAsteroid(anyString()))
+        .thenReturn(new Asteroid(1234L, "name", closeApproachDataList, new EstimatedDiameter()));
+    mockMvc
+        .perform(get("/api/v1/asteroid/largest-asteroid").param("year", "2019"))
+        .andExpect(status().isOk());
+  }
 }

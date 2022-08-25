@@ -9,17 +9,18 @@ import java.time.Duration;
 
 public abstract class RestClient {
 
-    protected WebClient webClient;
+  protected WebClient webClient;
 
-    protected RestClient(final String connectionProviderName, int maxIdleSeconds) {
+  protected RestClient(final String connectionProviderName, int maxIdleSeconds) {
 
-        ConnectionProvider connectionProvider = ConnectionProvider
-                .builder(connectionProviderName)
-                .maxIdleTime(Duration.ofSeconds(maxIdleSeconds))
-                .build();
+    ConnectionProvider connectionProvider =
+        ConnectionProvider.builder(connectionProviderName)
+            .maxIdleTime(Duration.ofSeconds(maxIdleSeconds))
+            .build();
 
-        this.webClient = WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(HttpClient.create(connectionProvider)))
-                .build();
-    }
+    this.webClient =
+        WebClient.builder()
+            .clientConnector(new ReactorClientHttpConnector(HttpClient.create(connectionProvider)))
+            .build();
+  }
 }

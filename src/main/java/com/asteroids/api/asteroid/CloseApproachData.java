@@ -13,8 +13,9 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CloseApproachData {
-    @JsonProperty("close_approach_date")
-    private Date closeApproachDate;
-    @JsonProperty("miss_distance")
-    private MissDistance missDistance;
+  @JsonProperty("close_approach_date")
+  private Date closeApproachDate;
+
+  @JsonProperty("miss_distance")
+  private MissDistance missDistance;
 }

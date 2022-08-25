@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EstimatedDiameter {
-    private EstimatedDiameterMeters meters;
+  private EstimatedDiameterMeters meters;
 }
